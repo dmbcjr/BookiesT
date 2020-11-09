@@ -10,6 +10,7 @@ public class AppManager : MonoBehaviour
 {
     private List<FightData> fights = new List<FightData>();
     private List<UserData> users = new List<UserData>();
+   
 
     private List<string> fightList = new List<string>();
     private List<string> userList = new List<string>();
@@ -18,9 +19,11 @@ public class AppManager : MonoBehaviour
     [SerializeField] private TMP_Dropdown fightDropdown;
     [SerializeField] private TMP_Dropdown oppoDropdown;
     [SerializeField] private TMP_Dropdown punterDropdown;
+    [SerializeField] private TextMeshProUGUI userLabel;
 
     int countLink = 0;
     string currentFightNameSelection;
+    string currentUsernameSelection;
 
     //public TMP_Text
     private void Start()
@@ -33,6 +36,7 @@ public class AppManager : MonoBehaviour
 
         ReadUserData();
         LoadUserData();
+        GetUserCredit();
     }
 
     
@@ -125,17 +129,17 @@ public class AppManager : MonoBehaviour
     }
     private void LoadUserData()
     {
-       
+
         foreach (UserData u in users)
         {
-            
-            Debug.Log(u.userName+ "\nA:" + u.userCredit + "  B:" + u.userID + " bets: "+ u.betsMade);
-            
+            //Debug.Log(f.fightDescription + "\nA:" + f.fighterA + "  B:" + f.fighterB);
+            userList.Add(u.userName);
 
         }
-        
+        punterDropdown.AddOptions(userList);
 
     }
+
     private void LoadOppoData()
     {
         oppoDropdown.ClearOptions();
@@ -151,12 +155,31 @@ public class AppManager : MonoBehaviour
 
         oppoDropdown.AddOptions(oppoList);
     }
+
+    private void GetUserCredit()
+    {
+        currentUsernameSelection = punterDropdown.options[punterDropdown.value].text;
+
+        var match = users.FirstOrDefault(u => u.userName == currentUsernameSelection);
+
+        userLabel.text = match.userCredit.ToString();
+
+
+    }
+   
     public void DropdownValueChanged(TMP_Dropdown change)
     {
-        
-        
+       
         LoadOppoData();
     }
+
+    public void UserDropdownValueChanged(TMP_Dropdown change)
+    {
+
+        GetUserCredit();
+    }
+
+
 }
 
 
