@@ -1,2 +1,2 @@
 # BookiesT
- Betting App with users and fake money
+ Betting App with users and fake currency
