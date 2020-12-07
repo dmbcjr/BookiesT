@@ -1,0 +1,85 @@
+{
+  "bets": [
+    {
+      "betID": "0",
+      "dateMade": "01-12-2020",
+      "fightDescription": "fight 1",
+      "fighterToWin": "fighterA",
+      "betAmount": 2000,
+      "punterName": "userA",
+      "fighterWon": "TBC"
+    },
+    {
+      "betID": "0",
+      "dateMade": "01-12-2020",
+      "fightDescription": "fight 2",
+      "fighterToWin": "fighterB",
+      "betAmount": 2000,
+      "punterName": "userB",
+      "fighterWon": "TBC"
+    },
+    {
+      "betID": "0",
+      "dateMade": "01-12-2020",
+      "fightDescription": "fight 3",
+      "fighterToWin": "fighterA",
+      "betAmount": 2000,
+      "punterName": "userA",
+      "fighterWon": "TBC"
+    },
+    {
+      "betID": "34387491-42d4-4d19-aa25-457d8323238c",
+      "dateMade": "07/12/2020 07:53:43",
+      "fightDescription": "234 Dave v Taran",
+      "fighterToWin": "Dave",
+      "betAmount": 456,
+      "punterName": "Def2",
+      "fighterWon": "tbc"
+    },
+    {
+      "betID": "ef2248bd-b569-408c-92ac-eb2170d4f0c4",
+      "dateMade": "07/12/2020 09:57:57",
+      "fightDescription": "fight2",
+      "fighterToWin": "test2B",
+      "betAmount": 69,
+      "punterName": "Dave",
+      "fighterWon": "tbc"
+    },
+    {
+      "betID": "094799c3-145f-4243-8dea-babc218cb2e4",
+      "dateMade": "07/12/2020 10:53:56",
+      "fightDescription": "234 Dave v Taran",
+      "fighterToWin": "Dave",
+      "betAmount": 80,
+      "punterName": "Def2",
+      "fighterWon": "tbc"
+    },
+    {
+      "betID": "dc0ab538-817d-4b59-96dd-0acb7aac74d2",
+      "dateMade": "07/12/2020 10:55:39",
+      "fightDescription": "234 Dave v Taran",
+      "fighterToWin": "Dave",
+      "betAmount": 65,
+      "punterName": "Default",
+      "fighterWon": "tbc"
+    },
+    {
+      "betID": "81c03077-ff5c-49ca-95be-028447c727df",
+      "dateMade": "07/12/2020 10:58:30",
+      "fightDescription": "234 Dave v Taran",
+      "fighterToWin": "Dave",
+      "betAmount": 1,
+      "punterName": "Default",
+      "fighterWon": "tbc"
+    },
+    {
+      "betID": "370602c4-654a-4d37-a4eb-1395570e4408",
+      "dateMade": "07/12/2020 11:00:20",
+      "fightDescription": "234 Dave v Taran",
+      "fighterToWin": "Dave",
+      "betAmount": 1,
+      "punterName": "Def2",
+      "fighterWon": "tbc"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "userID": 0,
+      "firstName": "Default",
+      "credit": 4924,
+      "betsMade": 1
+    },
+    {
+      "userID": 1,
+      "firstName": "Def2",
+      "credit": 4919,
+      "betsMade": 1
+    },
+    {
+      "userID": 2,
+      "firstName": "Dave",
+      "credit": 4990,
+      "betsMade": 1
+    }
+  ]
+}

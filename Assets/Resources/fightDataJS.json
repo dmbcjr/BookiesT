@@ -1,0 +1,22 @@
+{
+  "fights": [
+    {
+      "fightID": 0,
+      "fightDescription": "234 Dave v Taran",
+      "oppoA": "Dave",
+	  "oppoB":"Taran"
+    },
+    {
+      "fightID": 1,
+      "fightDescription": "fight2",
+      "oppoA": "test2A",
+	    "oppoB":"test2B"
+    },
+    {
+      "fightID": 2,
+      "fightDescription": "fight 3",
+      "oppoA": "test3A",
+	    "oppoB":"test3B"
+    }
+  ]
+}

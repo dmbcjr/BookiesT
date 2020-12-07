@@ -1,0 +1,31 @@
+{
+  "bets": [
+    {
+      "betID": "0",
+      "dateMade": "01-12-2020",
+      "fightDescription":"fight 1" ,
+      "fighterToWin": "fighterA",
+	  "betAmount": 2000,
+	  "punterName":"userA",
+	  "fighterWon":"TBC"
+    },
+    {
+      "betID": "0",
+      "dateMade": "01-12-2020",
+      "fightDescription":"fight 2" ,
+      "fighterToWin": "fighterB",
+	  "betAmount": 2000,
+	  "punterName":"userB",
+	  "fighterWon":"TBC"
+    },
+    {
+      "betID": "0",
+      "dateMade": "01-12-2020",
+      "fightDescription":"fight 3" ,
+      "fighterToWin": "fighterA",
+	  "betAmount": 2000,
+	  "punterName":"userA",
+	  "fighterWon":"TBC"
+    }
+  ]
+}

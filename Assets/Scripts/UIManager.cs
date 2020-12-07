@@ -12,15 +12,22 @@ namespace BookiesT
         public static UIManager instance;
         [SerializeField] Button btnPlaceBet;
         [SerializeField] Button btnMainMenu;
+        [SerializeField] Button btnBetPanel;
 
         [SerializeField] public TMP_Dropdown fightTMP;
         [SerializeField] public TMP_Dropdown fighterTMP;
-        [SerializeField] public TextMeshProUGUI betAmountTMP;
+        [SerializeField] public TMP_InputField betAmountTMP;
         [SerializeField] public TMP_Dropdown punterTMP;
 
-        [SerializeField] public TextMeshProUGUI userLabel;
+        [SerializeField] public GameObject betPanel;
+        [SerializeField] public TextMeshProUGUI fundsText;
+        [SerializeField] public TextMeshProUGUI betValidText;
 
-        string currentFightNameSelection, currentUsernameSelection;
+
+
+        int betAmount, fundAmount;
+        bool openBetPanel;
+        //string currentFightNameSelection, currentUsernameSelection;
 
         private void Awake()
         {
@@ -32,6 +39,10 @@ namespace BookiesT
         // Start is called before the first frame update
         void Start()
         {
+
+            ClearStart();
+            DataManager.Instance.ClearStart();
+
             UnityEngine.Assertions.Assert.IsNotNull(btnPlaceBet);
             btnPlaceBet.onClick.AddListener(delegate
             {
@@ -45,24 +56,38 @@ namespace BookiesT
             punterTMP.onValueChanged.AddListener(delegate
             {
                 DataManager.Instance.GetUserCredit();
+                
             });
 
-            ClearStart();
+
+            UnityEngine.Assertions.Assert.IsNotNull(fightTMP);
+            fightTMP.onValueChanged.AddListener(delegate
+            {
+                DataManager.Instance.LoadFighterData();
+            });
+
+            UnityEngine.Assertions.Assert.IsNotNull(btnBetPanel);
+            btnBetPanel.onClick.AddListener(CloseBetValidMenu);
+
+
+
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
         public void ClearStart()
         {
             ClearDropdowns();
 
         }
 
-       
-
+        public void OpenBetValidMenu()
+        {
+            betPanel.SetActive(true);
+        }
+        public void CloseBetValidMenu()
+        {
+            DataManager.Instance.ClearStart();
+            betPanel.SetActive(false);
+        }
         private void ClearDropdowns()
         {
             fightTMP.ClearOptions();
@@ -74,7 +99,20 @@ namespace BookiesT
         {
             SceneManager.LoadScene("MainMenu");
         }
+        public bool CheckPunterFunds()
+        {
+            betAmount = string.IsNullOrEmpty(betAmountTMP.text) ? 0 : int.Parse(betAmountTMP.text);
+            fundAmount = string.IsNullOrEmpty(fundsText.text) ? 0 : int.Parse(fundsText.text);
 
-       
+            if (betAmount > fundAmount)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
     }
 }

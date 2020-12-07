@@ -6,6 +6,12 @@ using TMPro;
 using System.IO;
 using System.Linq;
 using BookiesT;
+using System.Data;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Text;
+using UnityEditor;
+using System;
 
 namespace BookiesT {
 
@@ -22,8 +28,10 @@ namespace BookiesT {
          private List<string> fightList = new List<string>();
          private List<string> userList = new List<string>();
          public List<string> fighterList = new List<string>();
-      
-        
+
+
+        [SerializeField] public UserData currentUser = new UserData();
+
 
         int countLink = 0;
         string currentFightNameSelection;
@@ -38,7 +46,7 @@ namespace BookiesT {
         
         private void Start()
         {
-            ClearStart();
+           // ClearStart();
         }
 
         public void ClearStart()
@@ -57,64 +65,72 @@ namespace BookiesT {
         
         private void ReadFightData()
         {
-            //read in csv of all fight data
-            TextAsset fightData = Resources.Load<TextAsset>("fightdata");
-            string[] data = fightData.text.Split(new char[] { '\n' });
+            TextAsset fightDataJSON = Resources.Load<TextAsset>("fightDataJS");
 
-            for (int i = 1; i < data.Length - 1; i++)
+            DataSet dataSet = JsonConvert.DeserializeObject<DataSet>(fightDataJSON.ToString());
+
+            DataTable dataTable = dataSet.Tables["fights"];
+
+            foreach (DataRow row in dataTable.Rows)
             {
-                string[] row = data[i].Split(new char[] { ',' });
+                FightData f = new FightData();
 
-                if (row[1] != "")
-                {
-                    FightData f = new FightData();
+                f.fightID = System.Convert.ToInt32(row["fightID"]);
+                f.fightDescription = (string)row["fightDescription"];
+                f.fighterA = (string)row["oppoA"];
+                f.fighterB = (string)row["oppoB"];
 
-                    int.TryParse(row[0], out f.fightID);
-                    f.fightDescription = row[1];
-                    f.fighterA = row[2];
-                    f.fighterB = row[3];
+                fights.Add(f);
 
-                    fights.Add(f);
-                }
+
             }
-            //Debug.Log(fights.Count());
-            //
-
+            
         }
+
         private void ReadUserData()
         {
+            TextAsset userDataJSON = Resources.Load<TextAsset>("userData");
 
-            //read in csv of all fight data
-            TextAsset userData = Resources.Load<TextAsset>("punterdata");
-            string[] data = userData.text.Split(new char[] { '\n' });
+            DataSet dataSet = JsonConvert.DeserializeObject<DataSet>(userDataJSON.ToString());
 
+            DataTable dataTable = dataSet.Tables["users"];
 
-            for (int i = 1; i < data.Length - 1; i++)
+            foreach (DataRow row in dataTable.Rows)
             {
+                UserData u = new UserData();
 
-                string[] row = data[i].Split(new char[] { ',' });
+                u.userID = System.Convert.ToInt32(row["userID"]);
+                u.userName = (string)row["firstName"];
+                u.userCredit = System.Convert.ToInt32(row["credit"]);
+                u.betsMade = System.Convert.ToInt32(row["betsMade"]);
 
-                if (row[1] != "")
-                {
-
-                    UserData u = new UserData();
-
-                    int.TryParse(row[0], out u.userID);
-                    u.userName = row[1];
-                    int.TryParse(row[2], out u.userCredit);
-                    int.TryParse(row[3], out u.betsMade);
-
-                    users.Add(u);
-
-                }
-
+                users.Add(u);
 
             }
-            //Debug.Log(users.Count());
 
-            //
+            
+        }
+
+        public void APRESSMEE()
+        {
+            //UpdateUserCredit(10000);
+           
+            //Debug.Log(currentUser.userCredit);
+            SaveData.instance.SaveUserCredit(currentUser);
+        }
+        private void LoadUserData()
+        {
+
+            foreach (UserData u in users)
+            {
+                
+                userList.Add(u.userName);
+
+            }
+            UIManager.instance.punterTMP.AddOptions(userList);
 
         }
+
 
         private void LoadFightData()
         {
@@ -128,28 +144,17 @@ namespace BookiesT {
             UIManager.instance.fightTMP.AddOptions(fightList);
 
         }
-        private void LoadUserData()
-        {
-
-            foreach (UserData u in users)
-            {
-                //Debug.Log(f.fightDescription + "\nA:" + f.fighterA + "  B:" + f.fighterB);
-                userList.Add(u.userName);
-
-            }
-            UIManager.instance.punterTMP.AddOptions(userList);
-
-        }
-
-        private void LoadFighterData()
+      
+        public void LoadFighterData()
         {
             UIManager.instance.fighterTMP.ClearOptions();
             fighterList.Clear();
             currentFightNameSelection = UIManager.instance.fightTMP.options[UIManager.instance.fightTMP.value].text;
-            //Debug.Log(currentFightNameSelection);
+            
 
             var match = fights.FirstOrDefault(f => f.fightDescription == currentFightNameSelection);
 
+            
             fighterList.Add(match.fighterA);
             fighterList.Add(match.fighterB);
 
@@ -161,22 +166,35 @@ namespace BookiesT {
         {
             currentUsernameSelection = UIManager.instance.punterTMP.options[UIManager.instance.punterTMP.value].text;
 
+
             var match = users.FirstOrDefault(u => u.userName == currentUsernameSelection);
 
-            UIManager.instance.userLabel.text = match.userCredit.ToString();
+
+            
+            UIManager.instance.fundsText.text = match.userCredit.ToString();
             currentUserCredit = match.userCredit;
 
         }
 
+        public void UpdateUserCredit(string creditToSubtract)
+        {
+
+            currentUsernameSelection = UIManager.instance.punterTMP.options[UIManager.instance.punterTMP.value].text;
+
+            currentUser = users.FirstOrDefault(u => u.userName == currentUsernameSelection);
+
+            currentUser.userCredit -= Convert.ToInt32(creditToSubtract);
+
+           
+        }
+        
+        
         public void DropdownValueChanged(TMP_Dropdown change)
         {
 
             LoadFighterData();
         }
 
-
-
-        
 
     }
 
